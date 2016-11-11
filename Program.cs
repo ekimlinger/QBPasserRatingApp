@@ -39,13 +39,14 @@ namespace QuarterbackRating
                 // Show data
                 Console.Write(player.name + "'s QB Rating is: " + player.getPasserRating() + "\n");
 
-                Console.Write("Would you like to start over? (yes/no)");
+                Console.Write("Would you like to start over? (yes/no): ");
                 string answer = Console.ReadLine();
                 // If answer is any variant of no, don't restart
-                if (answer.ToLower() != "no")
+                if (answer.ToLower() == "no")
                 {
                     goAgain = false;
                 }
+                Console.Write("\n");
             } while(goAgain);
             
         }

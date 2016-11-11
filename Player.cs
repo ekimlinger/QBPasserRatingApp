@@ -218,11 +218,6 @@ namespace QuarterbackRating
 
 
 
-        
-        
-        // Setters
-        private double PassesCompleted { get; set; }
-
 
     }
 }
