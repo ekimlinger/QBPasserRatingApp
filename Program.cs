@@ -26,19 +26,28 @@ namespace QuarterbackRating
     {
         static void Main(string[] args)
         {
-            Player player = new Player();
+            bool goAgain = true;
+            do
+            {
 
-            // Have user input data
-            player.getUserInput();            
+                // Instantiate new player object
+                Player player = new Player();
+
+                // Have user input data
+                player.getUserInput();
+
+                // Show data
+                Console.Write(player.name + "'s QB Rating is: " + player.getPasserRating() + "\n");
+
+                Console.Write("Would you like to start over? (yes/no)");
+                string answer = Console.ReadLine();
+                // If answer is any variant of no, don't restart
+                if (answer.ToLower() != "no")
+                {
+                    goAgain = false;
+                }
+            } while(goAgain);
             
-
-            // Show data
-            // "PLAYER NAME's QB Rating is: RATING" (show with one decimal place)
-            Console.Write(player.getName() + "'s QB Rating is: " + player.getPasserRating() + "\n");
-
-
-            // Ask to repeat process or quit
-
         }
     }
 }

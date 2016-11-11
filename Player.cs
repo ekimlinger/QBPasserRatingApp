@@ -8,106 +8,134 @@ namespace QuarterbackRating
 {
     class Player
     {
-        private string   name;
+        public string name;
 
-        private double  passesCompleted,
-                        passingAttempts,
+        private double  passesCompleted,      
+                        passingAttempts,      
                         passingYards,
                         tdPasses,
                         passingInterceptions;
+
         
         // Constructor
         public Player()
         {
-            name = "unknown";
-            passesCompleted = 0;
-            passingAttempts = 0;
-            passingYards = 0;
-            tdPasses = 0;
-            passingInterceptions = 0;
+            name = "";
+            passesCompleted = -1;
+            passingAttempts = -1;
+            passingYards = -1;
+            tdPasses = -1;
+            passingInterceptions = -1;
         }
-
-        // Deconstructor
-        ~Player()
-        {
-
-        }
-
-
 
 
         public int getUserInput()
         {
+            bool err;
             // Get player name                
-            Console.Write("Please enter the player's full name (press enter when finished)\n");
+            Console.Write("Player Name: ");
             name = Console.ReadLine();
 
             // Get passing attempts
             do
             {
-                Console.Write("Please enter the number of passing attempts made by " + name + ": \n");
-                passingAttempts = double.Parse(Console.ReadLine());
-                if (passingAttempts < 1)
+                err = false;
+                Console.Write("Pass Attempts: ");
+                // Get string from user and attempt to parse, and store error if failed
+                if (double.TryParse(Console.ReadLine(), out passingAttempts) == false)
                 {
-                    Console.Write("Passing attempts cannot be less than 1\n");
+                    err = true;
+                }
+                // Passing attempts cannot be less than 1
+                if (passingAttempts < 1 || err)
+                {
+                    err = true;
+                    Console.Write("Invalid number of passing attempts\n");
                 }
 
-            } while (passingAttempts < 1); 
+            } while (err); 
             
             
             // Get passes completed
             do
             {
-                Console.Write("Please enter the number of passing completions made by " + name + ": \n");
-                passesCompleted = double.Parse(Console.ReadLine());
-
-                //Passes completed cannot be more than passing attempts
-                if (passesCompleted > passingAttempts || passesCompleted < 0)
+                err = false;
+                Console.Write("Pass Completions: ");
+                // Get string from user and attempt to parse, and store error if failed
+                if (double.TryParse(Console.ReadLine(), out passesCompleted) == false)
                 {
-                    Console.Write("Invalid number of passing attempts.\n");
+                    err = true;
                 }
-            } while (passesCompleted > passingAttempts || passesCompleted < 0 );
+                //Passes completed cannot be more than passing attempts
+                if (passesCompleted > passingAttempts || passesCompleted < 0 || err)
+                {
+                    err = true;
+                    Console.Write("Invalid number of pass completions.\n");
+                }
+            } while (err);
             
             // Passing yards
             do
             {
-                Console.Write("Please enter " + name + "'s passing yards: \n");
-                passingYards = double.Parse(Console.ReadLine());
-
-                // Impossible to have more than 100 yards per passes completed
-                if ( (passingYards / passesCompleted) > 100 || passingYards < 0 )
+                err = false;
+                Console.Write("Passing Yards: ");
+                // Get string from user and attempt to parse , and store error if failed
+                if (double.TryParse(Console.ReadLine(), out passingYards) == false)
                 {
+                    err = true;
+                }
+                // Impossible to have more than +/-99 yards per passes completed
+                if ((passingYards / passesCompleted) >= 100 || (passingYards / passesCompleted) <= -100 || err)
+                {
+                    err = true;
                     Console.Write("Invalid number of passing yards.\n");
                 }
 
-            } while ( (passingYards / passesCompleted) > 100 || passingYards < 0);
+            } while (err);
             
             // Number of touchdown passes
             do
             {
-                Console.Write("Please enter " + name + "'s number of touchdown passes: \n");
-                tdPasses = double.Parse(Console.ReadLine());
+                err = false;
+                Console.Write("Passing Touchdowns: ");
 
-                // Impossible to have more touchdowns than completions
-                if (tdPasses > passesCompleted || tdPasses < 0)
+                // Get string from user and attempt to parse, and store error if failed
+                if (double.TryParse(Console.ReadLine(), out tdPasses) == false)
                 {
-                    Console.Write("Invalid number of touchdown passes.");
+                    err = true;
+                } 
+                
+                // Impossible to have more touchdowns than completions, or negative amount
+                if (tdPasses > passesCompleted || tdPasses < 0 || err)
+                {
+                    err = true;
+                    Console.Write("Invalid number of touchdown passes.\n");
                 }
 
-            } while (tdPasses > passesCompleted || tdPasses < 0);
+            } while (err);
             
 
         
             // Number of interceptions
             do
             {
-                Console.Write("Please enter " + name + "'s number of interceptions: \n");
-                passingInterceptions = double.Parse(Console.ReadLine());
-                if (passingInterceptions > (passingAttempts - passesCompleted))
+                err = false;
+                Console.Write("Interceptions: ");
+                
+                // Get string from user and attempt to parse, and store error if failed
+                if (double.TryParse(Console.ReadLine(), out passingInterceptions) == false)
                 {
-                    Console.Write("Invalid number of interceptions.");
+                    err = true;
                 }
-            } while (passingInterceptions > (passingAttempts - passesCompleted));
+                
+                // Interceptions and completions cannot be more than attempts, or negative amount
+                if (passingInterceptions > (passingAttempts - passesCompleted) || passingInterceptions < 0 || err)
+                {
+                    err = true;
+                    Console.Write("Invalid number of interceptions.\n");
+                }
+
+            } while (err);
 
             return 0;
             
@@ -193,56 +221,8 @@ namespace QuarterbackRating
         
         
         // Setters
-        public void setName(string setter)
-        {
-            name = setter;
-        }
-        public void setPassesCompleted(double setter)
-        {
-            passingAttempts = setter;
-        }
-        public void setPassingAttempts(double setter)
-        {
-            passesCompleted = setter;
-        }
-        public void setPassingYards(double setter)
-        {
-            passingYards = setter;
-        }
-        public void setTDPasses(double setter)
-        {
-            tdPasses = setter;
-        }
-        public void setPassingInterceptions(double setter)
-        {
-            passingInterceptions = setter;
-        }
+        private double PassesCompleted { get; set; }
 
-        //Getters
-        public string getName()
-        {
-            return name;
-        }
-        public double getPassesCompleted()
-        {
-            return passesCompleted;
-        }
-        public double getPassingAttempts()
-        {
-            return passingAttempts;
-        }
-        public double getPassingYards()
-        {
-            return passingYards;
-        }
-        public double getTDPasses()
-        {
-            return tdPasses;
-        }
-        public double getPassingInterceptions()
-        {
-            return passingInterceptions;
-        }
 
     }
 }
