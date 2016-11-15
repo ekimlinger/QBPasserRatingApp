@@ -1,14 +1,7 @@
 ﻿/*
- * 
- *   Notes to self :
- *       - Need to make sure completions/td/int cannot be more than attempts
- *       - Check to make sure that user can enter commas
- *       - NEED MINIMUM OF 1 PASS ATTEMPT
- *       - Reformat output
- *       - Be able to restart within application
- *       - Create flags showing whether or not calculations have been made      
- *       - General moron QA
- * 
+ *
+ * App to calculate QB Passer Rating 
+ *
  */
 
 
