@@ -38,11 +38,10 @@ namespace QuarterbackRating
                 if (answer.ToLower() == "no")
                 {
                     goAgain = false;
-                }
+                } 
                 Console.Write("\n");
             } while(goAgain);
             
         }
     }
 }
-

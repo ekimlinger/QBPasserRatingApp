@@ -85,7 +85,8 @@ namespace QuarterbackRating
                     err = true;
                 }
                 // Impossible to have more than +/-99 yards per passes completed
-                if ((passingYards / passesCompleted) >= 100 || (passingYards / passesCompleted) <= -100 || err)
+                if (    (passingYards / passesCompleted) >= 100 || 
+                        (passingYards / passesCompleted) <= -100 || err)
                 {
                     err = true;
                     Console.Write("Invalid number of passing yards.\n");
@@ -129,7 +130,7 @@ namespace QuarterbackRating
                 }
                 
                 // Interceptions and completions cannot be more than attempts, or negative amount
-                if (passingInterceptions > (passingAttempts - passesCompleted) || passingInterceptions < 0 || err)
+                if (passingAttempts < ( passesCompleted + passingInterceptions) || passingInterceptions < 0 || err)
                 {
                     err = true;
                     Console.Write("Invalid number of interceptions.\n");
@@ -142,6 +143,8 @@ namespace QuarterbackRating
         }
         
             
+
+
         // 1. Weighted value of percentage of completions per attempt    
         private double getWCompPerAttempt()
         {
@@ -211,7 +214,12 @@ namespace QuarterbackRating
         public double getPasserRating()
         {
             double passerRating;
-            passerRating = (getWCompPerAttempt() + getWYardsPerAttempt() + getWTDPassesPerAttempt() + getWIntPerAttempt()) / 6 * 100;
+            passerRating = (  getWCompPerAttempt() 
+                            + getWYardsPerAttempt() 
+                            + getWTDPassesPerAttempt() 
+                            + getWIntPerAttempt() ) 
+                            / 6 * 100;
+            
             passerRating = Math.Round(passerRating, 1);
             return passerRating;
         }
